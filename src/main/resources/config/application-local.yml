@@ -1,0 +1,14 @@
+application:
+  api:
+    base-path: /api/v1
+
+spring:
+  #JPA CONFIGURATION
+  datasource:
+    url: jdbc:mysql://localhost:3306/sys_smartrash
+    username: root
+    password: 123456
+
+server:
+  port: 7071
+
