@@ -8,10 +8,12 @@ servers:
   - url: http://localhost:7071
 
 paths:
-  /usuarios:
+  /users:
     get:
       summary: Obtener todos los usuarios
-      operationId: getUsuarios
+      tags:
+        - User
+      operationId: getUsers
       responses:
         '200':
           description: Lista de usuarios obtenida correctamente
@@ -20,113 +22,188 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Usuario'
-  /usuarios/create:
+                  $ref: '#/components/schemas/User'
+  /users/create:
     post:
       summary: Crear un nuevo usuario
+      tags:
+        - User
       operationId: postCreateUser
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Usuario'
+              $ref: '#/components/schemas/User'
       responses:
         '201':
           description: Usuario creado correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Usuario'
-  /usuarios/{idUsuario}:
+                $ref: '#/components/schemas/User'
+  /users/{userId}:
     parameters:
       - in: path
-        name: idUsuario
+        name: userId
         required: true
         description: ID del usuario a actualizar o eliminar
         schema:
           type: string
     get:
       summary: Obtener un usuario por ID
-      operationId: obtenerUsuarioPorID
+      tags:
+        - User
+      operationId: getUserById
       responses:
         '200':
           description: Usuario obtenido correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Usuario'
+                $ref: '#/components/schemas/User'
         '404':
           description: Usuario no encontrado
-  /usuarios/{idUsuario}/update:
+  /users/{userId}/update:
     parameters:
       - in: path
-        name: idUsuario
+        name: userId
         required: true
         description: ID del usuario a actualizar o eliminar
         schema:
           type: string
     put:
-      summary: Actualizar un usuario por ID
-      operationId: actualizarUsuarioPorID
+      summary: Actualización de usuario por ID
+      tags:
+        - User
+      operationId: userUpdateById
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Usuario'
+              $ref: '#/components/schemas/User'
       responses:
         '200':
           description: Usuario actualizado correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Usuario'
+                $ref: '#/components/schemas/User'
         '404':
           description: Usuario no encontrado
-  /usuarios/{idUsuario}/delete:
+  /users/{userId}/delete:
     parameters:
       - in: path
-        name: idUsuario
+        name: userId
         required: true
         description: ID del usuario a actualizar o eliminar
         schema:
           type: string
     delete:
-      summary: Eliminar un usuario por ID
-      operationId: eliminarUsuarioPorID
+      summary: Eliminación de usuario por ID
+      tags:
+        - User
+      operationId: userDeleteById
       responses:
         '204':
           description: Usuario eliminado correctamente
         '404':
           description: Usuario no encontrado
+  /communities:
+    get:
+      summary: Obtener todas las communidades
+      tags:
+        - Community
+      operationId: getCommunities
+      responses:
+        '200':
+          description: Lista de communidades obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Community'
+  /communities/create:
+    post:
+      summary: Crear una nueva Comunidad
+      tags:
+        - Community
+      operationId: postCreateCommunity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Community'
+      responses:
+        '201':
+          description: Community creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Community'
 components:
   schemas:
-    Usuario:
+    User:
       type: object
       properties:
-        idUsuario:
-          type: string
+        user_id:
+          type: integer
           description: ID único del usuario (clave primaria)
         dni:
           type: string
           description: Número de documento de identidad del usuario
           pattern: "^[0-9]{8}$"
-        nombres:
+        name:
           type: string
           description: Nombres del usuario
-        apellidos:
+        lastname:
           type: string
           description: Apellidos del usuario
         email:
           type: string
           format: email
+          pattern: '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
           description: Dirección de correo electrónico del usuario
+        phone_number:
+          type: string
+          description: Número de teléfono
+          pattern: "^[0-9]{9}$"
         password:
           type: string
           format: password
           description: Contraseña del usuario (almacenada como VARBINARY en la base de datos)
+        user_type:
+          type: string
+          description: Tipo de Usuario
+        community_id:
+          type: integer
+          description: ID unico de la comunidad
+          pattern: '^\d+$'
       required:
-        - idUsuario
+        - userId
         - dni
+        - email
+        - phone_number
         - password
+        - community_id
+    Community:
+      type: object
+      properties:
+        community_id:
+          type: integer
+          description: ID unico de la comunidad
+        communityName:
+          type: string
+          description: Nombre de la comunidad
+          example: "AA.HH. EL MILAGRO"
+        address:
+          type: string
+          description: Dirección de la comunidad
+          example: "Av. Principal s/n"
+      required:
+        - community_id
+        - communityName
+        - address

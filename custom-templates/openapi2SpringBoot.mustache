@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 */
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.HttpService.model")
+@EntityScan(basePackages = "com.valros.ux.services.model")
 @EnableJpaRepositories(basePackages = "com.valros.ux.services.smartrash.repositories")
 @ComponentScan(basePackages = {"com.valros.ux.services", "{{basePackage}}", "{{apiPackage}}", "{{configPackage}}"})
 public class OpenApiGeneratorApplication {

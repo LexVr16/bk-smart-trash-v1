@@ -1,6 +1,5 @@
 package com.valros.ux.services.config;
 
-import org.springframework.context.annotation.Configuration;
 
 /**
  * Main class for running Spring Boot framework.<br/>
@@ -21,6 +20,6 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0
  */
 
-@Configuration
+
 public class ApplicationConfig {
 }
