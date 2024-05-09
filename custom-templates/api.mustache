@@ -81,6 +81,10 @@ import java.util.concurrent.CompletableFuture;
 {{/async}}
 import {{javaxPackage}}.annotation.Generated;
 
+/**
+* Public Interface called classname
+* api.mustache
+*/
 {{>generatedAnnotation}}
 {{#useBeanValidation}}
 @Validated
@@ -109,22 +113,7 @@ import {{javaxPackage}}.annotation.Generated;
 <%={{ }}=%>
 {{/useRequestMappingOnInterface}}
 public interface {{classname}} {
-{{#jdk8-default-interface}}
-    {{^isDelegate}}
-        {{^reactive}}
 
-    default Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
-        {{/reactive}}
-    {{/isDelegate}}
-    {{#isDelegate}}
-
-    default {{classname}}Delegate getDelegate() {
-        return new {{classname}}Delegate() {};
-    }
-    {{/isDelegate}}
-{{/jdk8-default-interface}}
 {{#operation}}
 
     /**

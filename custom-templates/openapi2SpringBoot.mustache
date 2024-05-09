@@ -1,16 +1,22 @@
 package {{basePackage}};
 
+import com.valros.ux.services.smartrash.repositories.IUserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
-@SpringBootApplication()
-@ComponentScan(
-    basePackages = {"{{basePackage}}", "{{apiPackage}}" , "{{configPackage}}","com.valros.ux.services"}
-)
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
 /**
 * Public Class called OpenApiGeneratorApplication
 * openapi2SpringBoot.mustache
 */
+
+@SpringBootApplication
+@EntityScan(basePackages = "com.HttpService.model")
+@EnableJpaRepositories(basePackages = "com.valros.ux.services.smartrash.repositories")
+@ComponentScan(basePackages = {"com.valros.ux.services", "{{basePackage}}", "{{apiPackage}}", "{{configPackage}}"})
 public class OpenApiGeneratorApplication {
     public static void main(String[] args) {
         SpringApplication.run(OpenApiGeneratorApplication.class, args);
