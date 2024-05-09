@@ -42,6 +42,7 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   private static final long serialVersionUID = 1L;
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
 {{/openApiNullable}}
   {{#vars}}
   {{^isContainer}}
