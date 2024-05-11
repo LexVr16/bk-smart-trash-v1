@@ -22,7 +22,14 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<User> getUserById(String userId) {
-        return null;
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(userService.getUserById(userId));
+        } catch (Exception e) {
+            log.error("Error retrieving getUsers", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Override
@@ -30,7 +37,7 @@ public class UserController implements UsersApi {
         try {
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(userService.getUsers());
+                    .body(userService.getAllUsers());
         } catch (Exception e) {
             log.error("Error retrieving getUsers", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -40,7 +47,9 @@ public class UserController implements UsersApi {
     @Override
     public ResponseEntity<User> postCreateUser(User user) {
         try {
-            return ResponseEntity.ok(userService.createUser(user));
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(userService.createUser(user));
         } catch (Exception e) {
             log.error("Error retrieving postCreateUser", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -49,11 +58,21 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<Void> userDeleteById(String userId) {
-        return null;
+        try {
+            return userService.deleteUserById(userId);
+        } catch (Exception e) {
+            log.error("Error retrieving postCreateUser", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Override
     public ResponseEntity<User> userUpdateById(String userId, User user) {
-        return null;
+        try {
+            return ResponseEntity.ok(userService.updateUser(user));
+        } catch (Exception e) {
+            log.error("Error retrieving postCreateUser", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
