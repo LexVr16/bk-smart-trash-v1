@@ -1,0 +1,117 @@
+package com.valros.ux.services.smartrash.models.dao.impl;
+
+import com.valros.ux.services.model.User;
+import com.valros.ux.services.smartrash.models.dao.IUserDao;
+import com.valros.ux.services.smartrash.repositories.IUserRepository;
+import javassist.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
+@Component
+public class UserDao implements IUserDao {
+
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Override
+    public User getUserById(String id) {
+        try {
+            log.info("<<< In progress... - getUserById()");
+            Optional<User> userOptional = userRepository.findById(Integer.parseInt(id));
+            if (userOptional.isPresent()) {
+                log.info("Complete - getUserById() >>>");
+                return userOptional.get();
+            }
+            throw new NotFoundException("throw new NotFoundException - getAssignmentById()");
+        } catch (Exception e) {
+            log.error("Error - getUserById()" + e.getCause().getCause().getMessage());
+            throw new RuntimeException("throw new RuntimeException - getUserById()", e);
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        try {
+            log.info("<<< In progress... - getAllUsers()");
+            List<User> userList = userRepository.findAll();
+            log.info("Complete - getAllUsers() >>>");
+            return userList;
+        } catch (Exception e) {
+            log.error("Error getAllUsers(): " + e.getCause().getCause().getMessage());
+            throw new RuntimeException("throw new RuntimeException - getAllUsers()", e);
+        }
+    }
+
+    @Override
+    public User createUser(User user) {
+        try {
+            log.info("<<< In progress... - createUser()");
+            User usuario = new User();
+            usuario.setDni(user.getDni());
+            usuario.setName(user.getName());
+            usuario.setLastname(user.getLastname());
+            usuario.setAddress(user.getAddress());
+            usuario.setEmail(user.getEmail());
+            usuario.setPhoneNumber(user.getPhoneNumber());
+            usuario.setPassword(user.getPassword());
+            usuario.setUserType(user.getUserType());
+            usuario.setCommunityId(user.getCommunityId());
+            userRepository.save(usuario);
+            log.info("Complete - createUser() >>>");
+            return usuario;
+        } catch (Exception e) {
+            log.error("Error createUser(): " + e.getCause().getCause().getMessage());
+            throw new RuntimeException("throw new RuntimeException - createUser()", e);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUserById(String id) {
+        try {
+            log.info("<<< In progress... - deleteUserById()");
+            userRepository.deleteById(Integer.parseInt(id));
+            log.info("Complete - deleteUserById() >>>");
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            log.error("Error deleteUserById(): " + e.getCause().getCause().getMessage());
+            throw new RuntimeException("throw new RuntimeException - deleteUserById()", e);
+        }
+    }
+
+    @Override
+    public User updateUser(User user) {
+        try {
+            log.info("<<< In progress... - updateUser()");
+            Optional<User> existingUserOptional = userRepository.findById(user.getUserId());
+
+            if (existingUserOptional.isPresent()) {
+                User existingUser = existingUserOptional.get();
+                existingUser.setDni(user.getDni());
+                existingUser.setName(user.getName());
+                existingUser.setLastname(user.getLastname());
+                existingUser.setAddress(user.getAddress());
+                existingUser.setEmail(user.getEmail());
+                existingUser.setPhoneNumber(user.getPhoneNumber());
+                existingUser.setPassword(user.getPassword());
+                existingUser.setUserType(user.getUserType());
+                existingUser.setCommunityId(user.getCommunityId());
+
+                User updatedUser = userRepository.save(existingUser);
+                log.info("Complete - updateUser() >>>");
+                return updatedUser;
+            } else {
+                log.info("ERROR - updateUser() >>>");
+                throw new NotFoundException("throw new NotFoundException - updateUser()");
+            }
+        } catch (Exception e) {
+            log.error("Error - updateUser(): " + e.getMessage());
+            throw new RuntimeException("throw new RuntimeException - updateUser()", e);
+        }
+    }
+}

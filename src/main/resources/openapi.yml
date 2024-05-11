@@ -13,7 +13,7 @@ paths:
       summary: Obtener todas las communidades
       tags:
         - Community
-      operationId: getCommunities
+      operationId: getAllCommunities
       responses:
         '200':
           description: Lista de communidades obtenida correctamente
@@ -104,7 +104,7 @@ paths:
       summary: Eliminación de Comunidad por ID
       tags:
         - Community
-      operationId: communityeleteById
+      operationId: communityDeleteById
       responses:
         '204':
           description: Comunidad eliminado correctamente
@@ -115,7 +115,7 @@ paths:
       summary: Obtener todos los usuarios
       tags:
         - User
-      operationId: getUsers
+      operationId: getAllUsers
       responses:
         '200':
           description: Lista de usuarios obtenida correctamente
@@ -217,7 +217,7 @@ paths:
       summary: Obtener todos los camiones
       tags:
         - Truk
-      operationId: getTruks
+      operationId: getAllTruks
       responses:
         '200':
           description: Lista de Camiones obtenida correctamente
@@ -319,7 +319,7 @@ paths:
       summary: Obtener todos los asignaciones
       tags:
         - Assignment
-      operationId: getAssignments
+      operationId: getAllAssignments
       responses:
         '200':
           description: Lista de asignaciones obtenida correctamente
@@ -388,7 +388,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Assignment'
       responses:
         '200':
           description: Asignación actualizado correctamente
@@ -421,7 +421,7 @@ paths:
       summary: Obtener todos los notificaciones
       tags:
         - Notification
-      operationId: getNotifications
+      operationId: getAllNotifications
       responses:
         '200':
           description: Lista de notificaciones obtenida correctamente
@@ -573,13 +573,13 @@ components:
         community_id:
           type: integer
           description: ID unico de la comunidad
-        communityName:
+        community_name:
           type: string
           description: Nombre de la comunidad
           example: "AA.HH. EL MILAGRO"
       required:
         - community_id
-        - communityName
+        - community_name
     Truk:
       type: object
       properties:

@@ -1,7 +1,8 @@
-package com.valros.ux.services.smartrash.services;
+package com.valros.ux.services.smartrash.services.impl;
 
 import com.valros.ux.services.model.User;
 import com.valros.ux.services.smartrash.models.dao.IUserDao;
+import com.valros.ux.services.smartrash.services.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +12,10 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     @Autowired
-    IUserDao userDao;
+    private IUserDao userDao;
 
     @Override
     public User getUserById(String id) {

@@ -1,9 +1,8 @@
 package com.valros.ux.services.smartrash.controllers;
 
-
-import com.valros.ux.services.controller.CommunitiesApi;
-import com.valros.ux.services.model.Community;
-import com.valros.ux.services.smartrash.services.ICommunityService;
+import com.valros.ux.services.controller.AssignmentsApi;
+import com.valros.ux.services.model.Assignment;
+import com.valros.ux.services.smartrash.services.IAssignmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,63 +15,64 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("${application.api.base-path}")
-public class CommunityController implements CommunitiesApi {
+public class AssignmentController implements AssignmentsApi {
 
     @Autowired
-    private ICommunityService iCommunityService;
+    private IAssignmentService iAssignmentService;
+
 
     @Override
-    public ResponseEntity<Community> communityUpdateById(String communityId, Community community) {
+    public ResponseEntity<Void> assignmentDeleteById(String assignmentId) {
         try {
-            return ResponseEntity.ok(iCommunityService.updateCommunity(community));
+            return iAssignmentService.deleteAssignmentById(assignmentId);
         } catch (Exception e) {
-            log.error("Error retrieving communityUpdateById", e);
+            log.error("Error retrieving assignmentDeleteById", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
-    public ResponseEntity<Void> communityDeleteById(String communityId) {
+    public ResponseEntity<Assignment> assignmentUpdateById(String assignmentId, Assignment assignment) {
         try {
-            return iCommunityService.deleteCommunityById(communityId);
+            return ResponseEntity.ok(iAssignmentService.updateAssignment(assignment));
         } catch (Exception e) {
-            log.error("Error retrieving communityDeleteById", e);
+            log.error("Error retrieving assignmentUpdateById", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
-    public ResponseEntity<List<Community>> getAllCommunities() {
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(iCommunityService.getAllCommunities());
-        } catch (Exception e) {
-            log.error("Error retrieving getAllCommunities", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @Override
-    public ResponseEntity<Community> getCommunityById(String communityId) {
+    public ResponseEntity<Assignment> getAssignmentById(String assignmentId) {
         try {
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(iCommunityService.getCommunityById(communityId));
+                    .body(iAssignmentService.getAssignmentById(assignmentId));
         } catch (Exception e) {
-            log.error("Error retrieving getCommunityById", e);
+            log.error("Error retrieving getAssignmentById", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
-    public ResponseEntity<Community> postCreateCommunity(Community community) {
+    public ResponseEntity<List<Assignment>> getAllAssignments() {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(iAssignmentService.getAllAssignments());
+        } catch (Exception e) {
+            log.error("Error retrieving getAllAssignments", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Assignment> postCreateAssignments(Assignment assignment) {
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(iCommunityService.createCommunity(community));
+                    .body(iAssignmentService.createAssignment(assignment));
         } catch (Exception e) {
-            log.error("Error retrieving postCreateCommunity", e);
+            log.error("Error retrieving postCreateAssignments", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
