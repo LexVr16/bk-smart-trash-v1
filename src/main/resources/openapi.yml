@@ -8,6 +8,108 @@ servers:
   - url: http://localhost:7071
 
 paths:
+  /communities:
+    get:
+      summary: Obtener todas las communidades
+      tags:
+        - Community
+      operationId: getCommunities
+      responses:
+        '200':
+          description: Lista de communidades obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Community'
+  /communities/create:
+    post:
+      summary: Crear una nueva Comunidad
+      tags:
+        - Community
+      operationId: postCreateCommunity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Community'
+      responses:
+        '201':
+          description: Comunidad creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Community'
+  /communities/{communityId}:
+    parameters:
+      - in: path
+        name: communityId
+        required: true
+        description: ID de la Comunidad a actualizar o eliminar
+        schema:
+          type: string
+    get:
+      summary: Obtener una comunidad por ID
+      tags:
+        - Community
+      operationId: getCommunityById
+      responses:
+        '200':
+          description: Comunidad obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Community'
+        '404':
+          description: Comunidad no encontrado
+  /communities/{communityId}/update:
+    parameters:
+      - in: path
+        name: communityId
+        required: true
+        description: ID de la Comunidad a actualizar o eliminar
+        schema:
+          type: string
+    put:
+      summary: Actualización de Comunidad por ID
+      tags:
+        - Community
+      operationId: communityUpdateById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Community'
+      responses:
+        '200':
+          description: Comunidad actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Community'
+        '404':
+          description: Comunidad no encontrado
+  /communities/{communityId}/delete:
+    parameters:
+      - in: path
+        name: communityId
+        required: true
+        description: ID de la Comunidad a actualizar o eliminar
+        schema:
+          type: string
+    delete:
+      summary: Eliminación de Comunidad por ID
+      tags:
+        - Community
+      operationId: communityeleteById
+      responses:
+        '204':
+          description: Comunidad eliminado correctamente
+        '404':
+          description: Comunidad no encontrado
   /users:
     get:
       summary: Obtener todos los usuarios
@@ -110,40 +212,312 @@ paths:
           description: Usuario eliminado correctamente
         '404':
           description: Usuario no encontrado
-  /communities:
+  /truks:
     get:
-      summary: Obtener todas las communidades
+      summary: Obtener todos los camiones
       tags:
-        - Community
-      operationId: getCommunities
+        - Truk
+      operationId: getTruks
       responses:
         '200':
-          description: Lista de communidades obtenida correctamente
+          description: Lista de Camiones obtenida correctamente
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Community'
-  /communities/create:
+                  $ref: '#/components/schemas/Truk'
+  /truks/create:
     post:
-      summary: Crear una nueva Comunidad
+      summary: Crear un nuevo Camión
       tags:
-        - Community
-      operationId: postCreateCommunity
+        - Truk
+      operationId: postCreateTruk
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Community'
+              $ref: '#/components/schemas/Truk'
       responses:
         '201':
-          description: Community creado correctamente
+          description: Camión creado correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Community'
+                $ref: '#/components/schemas/Truk'
+  /truks/{truk_id}:
+    parameters:
+      - in: path
+        name: truk_id
+        required: true
+        description: ID del camión a actualizar o eliminar
+        schema:
+          type: string
+    get:
+      summary: Obtener un camión por ID
+      tags:
+        - Truk
+      operationId: getTrukById
+      responses:
+        '200':
+          description: Camión obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truk'
+        '404':
+          description: Camión no encontrado
+  /truks/{trukId}/update:
+    parameters:
+      - in: path
+        name: trukId
+        required: true
+        description: ID del camión a actualizar o eliminar
+        schema:
+          type: string
+    put:
+      summary: Actualización de camión por ID
+      tags:
+        - Truk
+      operationId: trukUpdateById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Truk'
+      responses:
+        '200':
+          description: Camión actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truk'
+        '404':
+          description: Camión no encontrado
+  /truks/{trukId}/delete:
+    parameters:
+      - in: path
+        name: trukId
+        required: true
+        description: ID del camión a actualizar o eliminar
+        schema:
+          type: string
+    delete:
+      summary: Eliminación de usuario por ID
+      tags:
+        - Truk
+      operationId: trukDeleteById
+      responses:
+        '204':
+          description: Camión eliminado correctamente
+        '404':
+          description: Camión no encontrado
+  /assignments:
+    get:
+      summary: Obtener todos los asignaciones
+      tags:
+        - Assignment
+      operationId: getAssignments
+      responses:
+        '200':
+          description: Lista de asignaciones obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment'
+  /assignments/create:
+    post:
+      summary: Crear un nuevo asignación
+      tags:
+        - Assignment
+      operationId: postCreateAssignments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+      responses:
+        '201':
+          description: Asignación creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+  /assignments/{assignmentId}:
+    parameters:
+      - in: path
+        name: assignmentId
+        required: true
+        description: ID del asignación a actualizar o eliminar
+        schema:
+          type: string
+    get:
+      summary: Obtener un asignación por ID
+      tags:
+        - Assignment
+      operationId: getAssignmentById
+      responses:
+        '200':
+          description: Asignación obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+        '404':
+          description: Asignación no encontrado
+  /assignments/{assignmentId}/update:
+    parameters:
+      - in: path
+        name: assignmentId
+        required: true
+        description: ID del asignación a actualizar o eliminar
+        schema:
+          type: string
+    put:
+      summary: Actualización de asignación por ID
+      tags:
+        - Assignment
+      operationId: assignmentUpdateById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Asignación actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+        '404':
+          description: Asignación no encontrado
+  /assignments/{assignmentId}/delete:
+    parameters:
+      - in: path
+        name: assignmentId
+        required: true
+        description: ID del asignación a actualizar o eliminar
+        schema:
+          type: string
+    delete:
+      summary: Eliminación de asignación por ID
+      tags:
+        - Assignment
+      operationId: assignmentDeleteById
+      responses:
+        '204':
+          description: Asignación eliminado correctamente
+        '404':
+          description: Asignación no encontrado
+  /notifications:
+    get:
+      summary: Obtener todos los notificaciones
+      tags:
+        - Notification
+      operationId: getNotifications
+      responses:
+        '200':
+          description: Lista de notificaciones obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+  /notifications/create:
+    post:
+      summary: Crear un nuevo notificacion
+      tags:
+        - Notification
+      operationId: postCreateNotification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+      responses:
+        '201':
+          description: Notificación creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+  /notifications/{notificationId}:
+    parameters:
+      - in: path
+        name: notificationId
+        required: true
+        description: ID del notificación a actualizar o eliminar
+        schema:
+          type: string
+    get:
+      summary: Obtener un notificación por ID
+      tags:
+        - Notification
+      operationId: getNotificationById
+      responses:
+        '200':
+          description: Notificación obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '404':
+          description: Notificación no encontrado
+  /notifications/{notificationId}/update:
+    parameters:
+      - in: path
+        name: notificationId
+        required: true
+        description: ID del notificación a actualizar o eliminar
+        schema:
+          type: string
+    put:
+      summary: Actualización de notificación por ID
+      tags:
+        - Notification
+      operationId: NotificationUpdateById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+      responses:
+        '200':
+          description: Notificación actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '404':
+          description: Notificación no encontrado
+  /notifications/{notificationId}/delete:
+    parameters:
+      - in: path
+        name: notificationId
+        required: true
+        description: ID del notificación a actualizar o eliminar
+        schema:
+          type: string
+    delete:
+      summary: Eliminación de notificación por ID
+      tags:
+        - Notification
+      operationId: notificationDeleteById
+      responses:
+        '204':
+          description: Notificación eliminado correctamente
+        '404':
+          description: Notificación no encontrado
 components:
   schemas:
     User:
@@ -151,7 +525,7 @@ components:
       properties:
         user_id:
           type: integer
-          description: ID único del usuario (clave primaria)
+          description: ID único del usuario
         dni:
           type: string
           description: Número de documento de identidad del usuario
@@ -162,6 +536,10 @@ components:
         lastname:
           type: string
           description: Apellidos del usuario
+        address:
+          type: string
+          description: Dirección del usuario
+          example: "Av. Principal s/n"
         email:
           type: string
           format: email
@@ -178,10 +556,10 @@ components:
         user_type:
           type: string
           description: Tipo de Usuario
+          pattern: ^(administrador|conductor|residente)$
         community_id:
           type: integer
           description: ID unico de la comunidad
-          pattern: '^\d+$'
       required:
         - userId
         - dni
@@ -199,11 +577,83 @@ components:
           type: string
           description: Nombre de la comunidad
           example: "AA.HH. EL MILAGRO"
-        address:
-          type: string
-          description: Dirección de la comunidad
-          example: "Av. Principal s/n"
       required:
         - community_id
         - communityName
-        - address
+    Truk:
+      type: object
+      properties:
+        truk_id:
+          type: integer
+          description: ID unico de camión
+        plaque:
+          type: string
+          description: Identificación de la placa del camión
+        model:
+          type: string
+          description: modelo del camión
+        status:
+          type: string
+          description: Estado en el que se encuentra el camión
+          example: "disponible"
+          pattern: ^(disponible|en_ruta|reparación)$
+      required:
+        - truk_id
+        - plaque
+        - status
+    Assignment:
+      type: object
+      properties:
+        assignment_id:
+          type: integer
+          description: ID unico de asignación
+        user_id:
+          type: integer
+          description: ID único del usuario
+        truk_id:
+          type: integer
+          description: ID unico de camión
+        community_id:
+          type: integer
+          description: ID unico de la comunidad
+        assignment_date:
+          type: string
+          format: date
+          description: Fecha de la asignación
+        assignment_hour:
+          type: string
+          format: time
+          description: Hora de la asignación
+      required:
+        - assignment_id
+        - user_id
+        - truk_id
+        - community_id
+        - assignment_date
+        - assignment_hour
+    Notification:
+      type: object
+      properties:
+        notification_id:
+          type: integer
+          description: ID unico de la notificación
+        truk_id:
+          type: integer
+          description: ID unico de camión
+        community_id:
+          type: integer
+          description: ID unico de la comunidad
+        user_id:
+          type: integer
+          description: ID único del usuario
+        notification_date:
+          type: string
+          format: date
+          description: Fecha de la notificación
+        notification_hour:
+          type: string
+          format: time
+          description: Hora de la notificación
+        message:
+          type: string
+          description: Mensaje de la notificación
