@@ -17,13 +17,13 @@ import java.util.Optional;
 public class NotificationDao implements INotificationDao {
 
     @Autowired
-    private INotificationRepository notificationRepository;
+    private INotificationRepository iNotificationRepository;
 
     @Override
     public Notification getNotificationById(String id) {
         try {
             log.info("<<< In progress... - getNotificationById()");
-            Optional<Notification> notificationOptional = notificationRepository.findById(Integer.parseInt(id));
+            Optional<Notification> notificationOptional = iNotificationRepository.findById(Integer.parseInt(id));
             if (notificationOptional.isPresent()) {
                 log.info("Complete - getNotificationById() >>>");
                 return notificationOptional.get();
@@ -39,7 +39,7 @@ public class NotificationDao implements INotificationDao {
     public List<Notification> getAllNotifications() {
         try {
             log.info("<<< In progress... getAllNotifications()");
-            List<Notification> notificationList = notificationRepository.findAll();
+            List<Notification> notificationList = iNotificationRepository.findAll();
             log.info("Complete - getAllNotifications() >>>");
             return notificationList;
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class NotificationDao implements INotificationDao {
             objNotification.setUserId(notification.getUserId());
             objNotification.setNotificationDate(notification.getNotificationDate());
             objNotification.setNotificationHour(notification.getNotificationHour());
-            notificationRepository.save(objNotification);
+            iNotificationRepository.save(objNotification);
             log.info("Complete - createNotification() >>>");
             return objNotification;
         } catch (Exception e) {
@@ -71,7 +71,7 @@ public class NotificationDao implements INotificationDao {
     public ResponseEntity<Void> deleteNotificationById(String id) {
         try {
             log.info("<<< In progress... - deleteNotificationById()");
-            notificationRepository.deleteById(Integer.parseInt(id));
+            iNotificationRepository.deleteById(Integer.parseInt(id));
             log.info("Complete - deleteNotificationById() >>>");
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class NotificationDao implements INotificationDao {
     public Notification updateNotification(Notification notification) {
         try {
             log.info("<<< In progress... - updateNotification()");
-            Optional<Notification> existingNotificationOptional = notificationRepository.findById(notification.getNotificationId());
+            Optional<Notification> existingNotificationOptional = iNotificationRepository.findById(notification.getNotificationId());
             if (existingNotificationOptional.isPresent()) {
                 Notification existingNotification = existingNotificationOptional.get();
                 existingNotification.setTrukId(notification.getTrukId());
@@ -92,7 +92,7 @@ public class NotificationDao implements INotificationDao {
                 existingNotification.setUserId(notification.getUserId());
                 existingNotification.setNotificationDate(notification.getNotificationDate());
                 existingNotification.setNotificationHour(notification.getNotificationHour());
-                Notification updatedNotification = notificationRepository.save(existingNotification);
+                Notification updatedNotification = iNotificationRepository.save(existingNotification);
                 log.info("Complete - updateNotification() >>>");
                 return updatedNotification;
             } else {

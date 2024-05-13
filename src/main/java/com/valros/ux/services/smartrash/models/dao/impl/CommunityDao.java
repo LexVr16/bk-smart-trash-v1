@@ -17,13 +17,13 @@ import java.util.Optional;
 public class CommunityDao implements ICommunityDao {
 
     @Autowired
-    private ICommunityRepository communityRepository;
+    private ICommunityRepository iCommunityRepository;
 
     @Override
     public Community getCommunityById(String id) {
         try {
             log.info("<<< In progress... - getCommunityById()");
-            Optional<Community> communityOptional = communityRepository.findById(Integer.parseInt(id));
+            Optional<Community> communityOptional = iCommunityRepository.findById(Integer.parseInt(id));
             if (communityOptional.isPresent()) {
                 log.info("Complete - getCommunityById() >>>");
                 return communityOptional.get();
@@ -39,7 +39,7 @@ public class CommunityDao implements ICommunityDao {
     public List<Community> getAllCommunities() {
         try {
             log.info("<<< In progress... getAllCommunities()");
-            List<Community> communityList = communityRepository.findAll();
+            List<Community> communityList = iCommunityRepository.findAll();
             log.info("Complete - getAllCommunities() >>>");
             return communityList;
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class CommunityDao implements ICommunityDao {
             log.info("<<< In progress... - createCommunity()");
             Community objTruk = new Community();
             objTruk.setCommunityName(community.getCommunityName());
-            communityRepository.save(objTruk);
+            iCommunityRepository.save(objTruk);
             log.info("Complete - createCommunity() >>>");
             return objTruk;
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class CommunityDao implements ICommunityDao {
     public ResponseEntity<Void> deleteCommunityById(String id) {
         try {
             log.info("<<< In progress... - deleteCommunityById()");
-            communityRepository.deleteById(Integer.parseInt(id));
+            iCommunityRepository.deleteById(Integer.parseInt(id));
             log.info("Complete - deleteCommunityById() >>>");
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
@@ -80,11 +80,11 @@ public class CommunityDao implements ICommunityDao {
     public Community updateCommunity(Community community) {
         try {
             log.info("<<< In progress... - updateTruk()");
-            Optional<Community> existingCommunityOptional = communityRepository.findById(community.getCommunityId());
+            Optional<Community> existingCommunityOptional = iCommunityRepository.findById(community.getCommunityId());
             if (existingCommunityOptional.isPresent()) {
                 Community existingCommunity = existingCommunityOptional.get();
                 existingCommunity.setCommunityName(community.getCommunityName());
-                Community updatedCommunity = communityRepository.save(existingCommunity);
+                Community updatedCommunity = iCommunityRepository.save(existingCommunity);
                 log.info("Complete - updateTruk() >>>");
                 return updatedCommunity;
             } else {

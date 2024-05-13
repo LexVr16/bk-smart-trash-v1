@@ -185,7 +185,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>src/main/resources/openapi.yml</inputSpec>
+                            <inputSpec>src/main/resources/contracts/openapi.yml</inputSpec>
                             <generatorName>spring</generatorName>
                             <library>spring-boot</library>
                             <apiPackage>com.valros.ux.services.controller</apiPackage>

@@ -17,13 +17,13 @@ import java.util.Optional;
 public class AssignmentDao implements IAssignmentDao {
 
     @Autowired
-    private IAssignmentRepository assignmentRepository;
+    private IAssignmentRepository iAssignmentRepository;
 
     @Override
     public Assignment getAssignmentById(String id) {
         try {
             log.info("<<< In progress... - getAssignmentById()");
-            Optional<Assignment> assignmentOptional = assignmentRepository.findById(Integer.parseInt(id));
+            Optional<Assignment> assignmentOptional = iAssignmentRepository.findById(Integer.parseInt(id));
             if (assignmentOptional.isPresent()) {
                 log.info("Complete - getAssignmentById() >>>");
                 return assignmentOptional.get();
@@ -39,7 +39,7 @@ public class AssignmentDao implements IAssignmentDao {
     public List<Assignment> getAllAssignments() {
         try {
             log.info("<<< In progress... - getAllAssignments()");
-            List<Assignment> assignmentList = assignmentRepository.findAll();
+            List<Assignment> assignmentList = iAssignmentRepository.findAll();
             log.info("Complete - getAllAssignments() >>>");
             return assignmentList;
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class AssignmentDao implements IAssignmentDao {
             objAssignment.setCommunityId(assignment.getCommunityId());
             objAssignment.setAssignmentDate(assignment.getAssignmentDate());
             objAssignment.setAssignmentHour(assignment.getAssignmentHour());
-            assignmentRepository.save(objAssignment);
+            iAssignmentRepository.save(objAssignment);
             log.info("Complete - createAssignment() >>>");
             return objAssignment;
         } catch (Exception e) {
@@ -71,7 +71,7 @@ public class AssignmentDao implements IAssignmentDao {
     public ResponseEntity<Void> deleteAssignmentById(String id) {
         try {
             log.info("<<< In progress... - deleteAssignmentById()");
-            assignmentRepository.deleteById(Integer.parseInt(id));
+            iAssignmentRepository.deleteById(Integer.parseInt(id));
             log.info("Complete - deleteAssignmentById() >>>");
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class AssignmentDao implements IAssignmentDao {
     public Assignment updateAssignment(Assignment assignment) {
         try {
             log.info("<<< In progress... - updateAssignment()");
-            Optional<Assignment> existingAssignmentOptional = assignmentRepository.findById(assignment.getAssignmentId());
+            Optional<Assignment> existingAssignmentOptional = iAssignmentRepository.findById(assignment.getAssignmentId());
 
             if (existingAssignmentOptional.isPresent()) {
                 Assignment existingAssignment = new Assignment();
@@ -94,7 +94,7 @@ public class AssignmentDao implements IAssignmentDao {
                 existingAssignment.setAssignmentDate(assignment.getAssignmentDate());
                 existingAssignment.setAssignmentHour(assignment.getAssignmentHour());
 
-                Assignment updatedAssignment = assignmentRepository.save(existingAssignment);
+                Assignment updatedAssignment = iAssignmentRepository.save(existingAssignment);
                 log.info("Complete - updateAssignment() >>>");
                 return updatedAssignment;
             } else {

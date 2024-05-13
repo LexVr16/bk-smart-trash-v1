@@ -125,6 +125,26 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+  /users/login:
+    post:
+      summary: Inicio de sesión del usuario
+      tags:
+        - User
+      operationId: postLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Inicio de sesión exitoso
+        '401':
+          description: Credenciales incorrectas
+        '500':
+          description: Error interno del servidor
   /users/create:
     post:
       summary: Crear un nuevo usuario
@@ -431,6 +451,34 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Notification'
+  /notifications/{communityId}/notify:
+    parameters:
+      - in: path
+        name: communityId
+        required: true
+        description: ID de la comunidad necesario para notificar
+        schema:
+          type: string
+    post:
+      summary: Notificar a todos los usuarios en base a la comunidad
+      tags:
+        - Notification
+      operationId: postSendNotification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+      responses:
+        '200':
+          description: Se registró correctamente las notificaciones
+          content:
+            application/json:
+              schema:
+                type: integer
+        '500':
+          description: Error interno del servidor
   /notifications/create:
     post:
       summary: Crear un nuevo notificacion
@@ -523,7 +571,7 @@ components:
     User:
       type: object
       properties:
-        user_id:
+        userId:
           type: integer
           description: ID único del usuario
         dni:
@@ -533,7 +581,7 @@ components:
         name:
           type: string
           description: Nombres del usuario
-        lastname:
+        lastName:
           type: string
           description: Apellidos del usuario
         address:
@@ -545,7 +593,7 @@ components:
           format: email
           pattern: '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
           description: Dirección de correo electrónico del usuario
-        phone_number:
+        phoneNumber:
           type: string
           description: Número de teléfono
           pattern: "^[0-9]{9}$"
@@ -553,7 +601,7 @@ components:
           type: string
           format: password
           description: Contraseña del usuario (almacenada como VARBINARY en la base de datos)
-        user_type:
+        userType:
           type: string
           description: Tipo de Usuario
           pattern: ^(administrador|conductor|residente)$
@@ -564,26 +612,26 @@ components:
         - userId
         - dni
         - email
-        - phone_number
+        - phoneNumber
         - password
         - community_id
     Community:
       type: object
       properties:
-        community_id:
+        communityId:
           type: integer
           description: ID unico de la comunidad
-        community_name:
+        communityName:
           type: string
           description: Nombre de la comunidad
           example: "AA.HH. EL MILAGRO"
       required:
-        - community_id
-        - community_name
+        - communityId
+        - communityName
     Truk:
       type: object
       properties:
-        truk_id:
+        trukId:
           type: integer
           description: ID unico de camión
         plaque:
@@ -598,59 +646,59 @@ components:
           example: "disponible"
           pattern: ^(disponible|en_ruta|reparación)$
       required:
-        - truk_id
+        - trukId
         - plaque
         - status
     Assignment:
       type: object
       properties:
-        assignment_id:
+        assignmentId:
           type: integer
           description: ID unico de asignación
-        user_id:
+        userId:
           type: integer
           description: ID único del usuario
-        truk_id:
+        trukId:
           type: integer
           description: ID unico de camión
-        community_id:
+        communityId:
           type: integer
           description: ID unico de la comunidad
-        assignment_date:
+        assignmentDate:
           type: string
           format: date
           description: Fecha de la asignación
-        assignment_hour:
+        assignmentHour:
           type: string
           format: time
           description: Hora de la asignación
       required:
-        - assignment_id
-        - user_id
-        - truk_id
-        - community_id
-        - assignment_date
-        - assignment_hour
+        - assignmentId
+        - userId
+        - trukId
+        - communityId
+        - assignmentDate
+        - assignmentHour
     Notification:
       type: object
       properties:
-        notification_id:
+        notificationId:
           type: integer
           description: ID unico de la notificación
-        truk_id:
+        trukId:
           type: integer
           description: ID unico de camión
-        community_id:
+        communityId:
           type: integer
           description: ID unico de la comunidad
-        user_id:
+        userId:
           type: integer
           description: ID único del usuario
-        notification_date:
+        notificationDate:
           type: string
           format: date
           description: Fecha de la notificación
-        notification_hour:
+        notificationHour:
           type: string
           format: time
           description: Hora de la notificación

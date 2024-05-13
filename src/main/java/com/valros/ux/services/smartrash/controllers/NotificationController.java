@@ -2,6 +2,7 @@ package com.valros.ux.services.smartrash.controllers;
 
 import com.valros.ux.services.controller.NotificationsApi;
 import com.valros.ux.services.model.Notification;
+import com.valros.ux.services.model.User;
 import com.valros.ux.services.smartrash.services.INotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,4 +76,17 @@ public class NotificationController implements NotificationsApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @Override
+    public ResponseEntity<Integer> postSendNotification(String communityId, Notification notification) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(iNotificationService.postSendNotification(communityId, notification));
+        } catch (Exception e) {
+            log.error("Error retrieving postCreateNotification", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

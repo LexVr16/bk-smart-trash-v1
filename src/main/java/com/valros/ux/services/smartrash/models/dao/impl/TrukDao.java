@@ -17,13 +17,13 @@ import java.util.Optional;
 public class TrukDao implements ITrukDao {
 
     @Autowired
-    private ITrukRepository trukRepository;
+    private ITrukRepository iTrukRepository;
 
     @Override
     public Truk getTrukById(String id) {
         try {
             log.info("<<< In progress... - getTrukById()");
-            Optional<Truk> trukOptional = trukRepository.findById(Integer.parseInt(id));
+            Optional<Truk> trukOptional = iTrukRepository.findById(Integer.parseInt(id));
             if (trukOptional.isPresent()) {
                 log.info("Complete - getTrukById() >>>");
                 return trukOptional.get();
@@ -39,7 +39,7 @@ public class TrukDao implements ITrukDao {
     public List<Truk> getAllTruks() {
         try {
             log.info("<<< In progress... getAllTruks()");
-            List<Truk> trukList = trukRepository.findAll();
+            List<Truk> trukList = iTrukRepository.findAll();
             log.info("Complete - getAllTruks() >>>");
             return trukList;
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class TrukDao implements ITrukDao {
             objTruk.setModel(truk.getModel());
             objTruk.setPlaque(truk.getPlaque());
             objTruk.setStatus(truk.getStatus());
-            trukRepository.save(objTruk);
+            iTrukRepository.save(objTruk);
             log.info("Complete - createTruk() >>>");
             return objTruk;
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class TrukDao implements ITrukDao {
     public ResponseEntity<Void> deleteTrukById(String id) {
         try {
             log.info("<<< In progress... - deleteTrukById()");
-            trukRepository.deleteById(Integer.parseInt(id));
+            iTrukRepository.deleteById(Integer.parseInt(id));
             log.info("Complete - deleteTrukById() >>>");
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
@@ -82,13 +82,13 @@ public class TrukDao implements ITrukDao {
     public Truk updateTruk(Truk truk) {
         try {
             log.info("<<< In progress... - updateTruk()");
-            Optional<Truk> existingTrukOptional = trukRepository.findById(truk.getTrukId());
+            Optional<Truk> existingTrukOptional = iTrukRepository.findById(truk.getTrukId());
             if (existingTrukOptional.isPresent()) {
                 Truk existingTruk = existingTrukOptional.get();
                 existingTruk.setModel(truk.getModel());
                 existingTruk.setPlaque(truk.getPlaque());
                 existingTruk.setStatus(truk.getStatus());
-                Truk updatedTruk = trukRepository.save(existingTruk);
+                Truk updatedTruk = iTrukRepository.save(existingTruk);
                 log.info("Complete - updateTruk() >>>");
                 return updatedTruk;
             } else {

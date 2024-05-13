@@ -12,4 +12,5 @@ public interface INotificationService {
     Notification createNotification(Notification notification);
     ResponseEntity<Void> deleteNotificationById(String id);
     Notification updateNotification(Notification notification);
+    Integer postSendNotification(String communityId, Notification notification);
 }

@@ -59,7 +59,7 @@ public class UserController implements UsersApi {
     @Override
     public ResponseEntity<Void> postLogin(User user) {
         try {
-            if (user.getDni() !=null || user.getName() !=null || user.getLastname() !=null
+            if (user.getDni() !=null || user.getName() !=null || user.getLastName() !=null
                     || user.getPhoneNumber()!=null || user.getUserType()!=null || user.getCommunityId()!=null) {
                 log.error("BAD_REQUEST retrieving postLogin");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
