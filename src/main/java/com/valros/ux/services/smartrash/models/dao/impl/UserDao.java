@@ -6,6 +6,7 @@ import com.valros.ux.services.smartrash.repositories.IUserRepository;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -68,6 +69,25 @@ public class UserDao implements IUserDao {
         } catch (Exception e) {
             log.error("Error createUser(): " + e.getCause().getCause().getMessage());
             throw new RuntimeException("throw new RuntimeException - createUser()", e);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Void> postLogin(User user) {
+        try {
+            log.info("<<< In progress... - postLogin()");
+            User userExisting = userRepository.findLogin(user.getEmail(), user.getPassword());
+            if (userExisting !=null) {
+                log.info("Complete - postLogin() >>>");
+                return ResponseEntity.ok().build();
+            }
+            throw new NotFoundException("throw new NotFoundException - postLogin()");
+        } catch (NotFoundException nf) {
+            log.info("ERROR - postLogin() >>>");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (Exception e) {
+            log.error("Error - getUserById() >>>" + e.getCause().getCause().getMessage());
+            throw new RuntimeException("throw new RuntimeException - postLogin() >>>", e);
         }
     }
 

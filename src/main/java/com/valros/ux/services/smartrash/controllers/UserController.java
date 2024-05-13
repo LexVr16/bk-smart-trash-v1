@@ -2,7 +2,7 @@ package com.valros.ux.services.smartrash.controllers;
 
 import com.valros.ux.services.controller.UsersApi;
 import com.valros.ux.services.model.User;
-import com.valros.ux.services.smartrash.services.impl.UserService;
+import com.valros.ux.services.smartrash.services.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +18,14 @@ import java.util.List;
 public class UserController implements UsersApi {
 
     @Autowired
-    private UserService userService;
+    private IUserService iUserService;
 
     @Override
     public ResponseEntity<User> getUserById(String userId) {
         try {
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(userService.getUserById(userId));
+                    .body(iUserService.getUserById(userId));
         } catch (Exception e) {
             log.error("Error retrieving getUsers", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -37,7 +37,7 @@ public class UserController implements UsersApi {
         try {
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(userService.getAllUsers());
+                    .body(iUserService.getAllUsers());
         } catch (Exception e) {
             log.error("Error retrieving getAllUsers", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -49,7 +49,7 @@ public class UserController implements UsersApi {
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(userService.createUser(user));
+                    .body(iUserService.createUser(user));
         } catch (Exception e) {
             log.error("Error retrieving postCreateUser", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -57,9 +57,27 @@ public class UserController implements UsersApi {
     }
 
     @Override
+    public ResponseEntity<Void> postLogin(User user) {
+        try {
+            if (user.getDni() !=null || user.getName() !=null || user.getLastname() !=null
+                    || user.getPhoneNumber()!=null || user.getUserType()!=null || user.getCommunityId()!=null) {
+                log.error("BAD_REQUEST retrieving postLogin");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+           } else if(user.getEmail() !=null && user.getPassword() != null) {
+                return iUserService.postLogin(user);
+           }
+            log.error("BAD_REQUEST retrieving postLogin");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            log.error("Error retrieving postLogin", e);
+            return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).build();
+        }
+    }
+
+    @Override
     public ResponseEntity<Void> userDeleteById(String userId) {
         try {
-            return userService.deleteUserById(userId);
+            return iUserService.deleteUserById(userId);
         } catch (Exception e) {
             log.error("Error retrieving postCreateUser", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -69,7 +87,7 @@ public class UserController implements UsersApi {
     @Override
     public ResponseEntity<User> userUpdateById(String userId, User user) {
         try {
-            return ResponseEntity.ok(userService.updateUser(user));
+            return ResponseEntity.ok(iUserService.updateUser(user));
         } catch (Exception e) {
             log.error("Error retrieving postCreateUser", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

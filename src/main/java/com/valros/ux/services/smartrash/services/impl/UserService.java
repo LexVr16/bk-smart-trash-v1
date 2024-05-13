@@ -33,6 +33,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public ResponseEntity<Void> postLogin(User user) {
+        return userDao.postLogin(user);
+    }
+
+    @Override
     public ResponseEntity<Void> deleteUserById(String id) {
         return  userDao.deleteUserById(id);
     }

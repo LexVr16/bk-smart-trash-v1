@@ -10,6 +10,7 @@ public interface IUserDao {
     User getUserById(String id);
     List<User> getAllUsers();
     User createUser(User user);
+    ResponseEntity<Void>  postLogin(User user);
     ResponseEntity<Void> deleteUserById(String id);
     User updateUser(User user);
 }
