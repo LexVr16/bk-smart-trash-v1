@@ -61,12 +61,12 @@ INSERT INTO Community(community_name) VALUES
 ("AA.HH. MANUEL GONZALES PRADA");
 
 INSERT INTO USER(dni,name,last_name, address,email, phone_number, password, user_type, community_id) VALUES
-("11112222","Cesar","Valros","Paseo Los Olivos Mz J Lt 7","cvalros92@gmail.com","987654321","123","administrador",3),
-("11113333","Test1","Rosval","Calle Olaya Mz Q Lt 9","Test1@gmail.com","987654111","123","conductor",1),
-("11114444","Test2","Rosval","Calle Olaya Mz K Lt 2","Test2@gmail.com","987654222","123","conductor",1),
-("11115555","Test3","Rosval","Jr Cahuide Mz T Lt 4","Test3@gmail.com","987654333","123","residente",2),
-("11116666","Test4","Rosval","Calle Olaya Mz C Lt 3","Test4@gmail.com","98765444","123","residente",2),
-("11117777","Test5","Rosval","Calle Olaya Mz S Lt 5","Test5@gmail.com","987654555","123","residente",2),
+("11112222","Cesar","Valros","Paseo Los Olivos Mz J Lt 7","cvalros92@gmail.com","987654321","123","administrador",1),
+("11113333","Test1","Rosval","Calle Olaya Mz Q Lt 9","Test1@gmail.com","987654111","123","conductor",2),
+("11114444","Test2","Rosval","Calle Olaya Mz K Lt 2","Test2@gmail.com","987654222","123","conductor",2),
+("11115555","Test3","Rosval","Jr Cahuide Mz T Lt 4","Test3@gmail.com","987654333","123","residente",3),
+("11116666","Test4","Rosval","Calle Olaya Mz C Lt 3","Test4@gmail.com","98765444","123","residente",3),
+("11117777","Test5","Rosval","Calle Olaya Mz S Lt 5","Test5@gmail.com","987654555","123","residente",3),
 ("11118888","Test6","Rosval","Calle Olaya Mz R Lt 8","Test6@gmail.com","987654666","123","residente",3),
 ("11119999","Test7","Rosval","Jr Cahuide Mz T Lt 1","Test7@gmail.com","987654777","123","residente",4),
 ("22223333","Test8","Rosval","Jr Abancay Mz L Lt 4","Test8@gmail.com","987654888","123","residente",4),
@@ -87,6 +87,7 @@ INSERT INTO Assignment (user_id,truk_id,community_id,assignment_date,assignment_
 (2,1,1,"2024-05-15","09:00:00"),
 (3,2,2,"2024-05-15","09:00:00");
 
+USE sys_smartrash;
 SELECT * FROM COMMUNITY;
 SELECT * FROM User;
 SELECT * FROM truk;

@@ -3,7 +3,6 @@ package com.valros.ux.services.smartrash.models.dao.impl;
 import com.valros.ux.services.model.Notification;
 import com.valros.ux.services.smartrash.models.dao.INotificationDao;
 import com.valros.ux.services.smartrash.repositories.INotificationRepository;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class NotificationDao implements INotificationDao {
                 log.info("Complete - getNotificationById() >>>");
                 return notificationOptional.get();
             }
-            throw new NotFoundException("ERROR Notification no Encontrado - getNotificationById()");
+            throw new RuntimeException("ERROR Notification no Encontrado - getNotificationById()");
         } catch (Throwable e) {
             log.error("Error getNotificationById(): " + e.getCause().getCause().getMessage());
             throw new RuntimeException("throw new RuntimeException - getNotificationById()",e);
@@ -97,7 +96,7 @@ public class NotificationDao implements INotificationDao {
                 return updatedNotification;
             } else {
                 log.info("ERROR - updateNotification() >>>");
-                throw new NotFoundException("ERROR Notification no encontrado - updateNotification()");
+                throw new RuntimeException("ERROR Notification no encontrado - updateNotification()");
             }
         } catch (Exception e) {
             log.error("Error - updateTruk(): " + e.getMessage());

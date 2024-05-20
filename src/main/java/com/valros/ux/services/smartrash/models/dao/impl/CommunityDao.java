@@ -3,7 +3,6 @@ package com.valros.ux.services.smartrash.models.dao.impl;
 import com.valros.ux.services.model.Community;
 import com.valros.ux.services.smartrash.models.dao.ICommunityDao;
 import com.valros.ux.services.smartrash.repositories.ICommunityRepository;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class CommunityDao implements ICommunityDao {
                 log.info("Complete - getCommunityById() >>>");
                 return communityOptional.get();
             }
-            throw new NotFoundException("throw new NotFoundException - getCommunityById()");
+            throw new RuntimeException("throw new NotFoundException - getCommunityById()");
         } catch (Throwable e) {
             log.error("Error getCommunityById(): " + e.getCause().getCause().getMessage());
             throw new RuntimeException("throw new RuntimeException - getCommunityById()",e);
@@ -89,7 +88,7 @@ public class CommunityDao implements ICommunityDao {
                 return updatedCommunity;
             } else {
                 log.info("ERROR - updateTruk() >>>");
-                throw new NotFoundException("throw new NotFoundException - updateTruk()");
+                throw new RuntimeException("throw new NotFoundException - updateTruk()");
             }
         } catch (Exception e) {
             log.error("Error - updateTruk(): " + e.getMessage());

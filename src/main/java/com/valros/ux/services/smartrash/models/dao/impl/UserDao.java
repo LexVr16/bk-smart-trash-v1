@@ -3,7 +3,6 @@ package com.valros.ux.services.smartrash.models.dao.impl;
 import com.valros.ux.services.model.User;
 import com.valros.ux.services.smartrash.models.dao.IUserDao;
 import com.valros.ux.services.smartrash.repositories.IUserRepository;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class UserDao implements IUserDao {
                 log.info("Complete - getUserById() >>>");
                 return userOptional.get();
             }
-            throw new NotFoundException("throw new NotFoundException - getAssignmentById()");
+            throw new RuntimeException("throw new NotFoundException - getAssignmentById()");
         } catch (Exception e) {
             log.error("Error - getUserById()" + e.getCause().getCause().getMessage());
             throw new RuntimeException("throw new RuntimeException - getUserById()", e);
@@ -81,8 +80,8 @@ public class UserDao implements IUserDao {
                 log.info("Complete - postLogin() >>>");
                 return ResponseEntity.ok().build();
             }
-            throw new NotFoundException("throw new NotFoundException - postLogin()");
-        } catch (NotFoundException nf) {
+            throw new RuntimeException("throw new NotFoundException - postLogin()");
+        } catch (RuntimeException nf) {
             log.info("ERROR - postLogin() >>>");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
@@ -127,7 +126,7 @@ public class UserDao implements IUserDao {
                 return updatedUser;
             } else {
                 log.info("ERROR - updateUser() >>>");
-                throw new NotFoundException("throw new NotFoundException - updateUser()");
+                throw new RuntimeException("throw new NotFoundException - updateUser()");
             }
         } catch (Exception e) {
             log.error("Error - updateUser(): " + e.getMessage());
@@ -144,7 +143,7 @@ public class UserDao implements IUserDao {
                 log.info("Complete - getUserById() >>>");
                 return userList;
             }
-            throw new NotFoundException("throw new NotFoundException - getAssignmentById()");
+            throw new RuntimeException("throw new NotFoundException - getAssignmentById()");
         } catch (Exception e) {
             log.error("Error - getUserById()" + e.getCause().getCause().getMessage());
             throw new RuntimeException("throw new RuntimeException - getUserById()", e);

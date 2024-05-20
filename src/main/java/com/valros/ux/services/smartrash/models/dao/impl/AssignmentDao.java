@@ -3,7 +3,6 @@ package com.valros.ux.services.smartrash.models.dao.impl;
 import com.valros.ux.services.model.Assignment;
 import com.valros.ux.services.smartrash.models.dao.IAssignmentDao;
 import com.valros.ux.services.smartrash.repositories.IAssignmentRepository;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,8 @@ public class AssignmentDao implements IAssignmentDao {
                 log.info("Complete - getAssignmentById() >>>");
                 return assignmentOptional.get();
             }
-            throw new NotFoundException("throw new NotFoundException - getAssignmentById()");
+//            throw new NotFoundException("throw new NotFoundException - getAssignmentById()");
+            throw new RuntimeException("throw new NotFoundException - updateAssignment()");
         } catch (Throwable e) {
             log.error("Error getTrukById(): " + e.getCause().getCause().getMessage());
             throw new RuntimeException("throw new RuntimeException - getAssignmentById()",e);
@@ -99,7 +99,7 @@ public class AssignmentDao implements IAssignmentDao {
                 return updatedAssignment;
             } else {
                 log.info("ERROR - updateUser() >>>");
-                throw new NotFoundException("throw new NotFoundException - updateAssignment()");
+                throw new RuntimeException("throw new NotFoundException - updateAssignment()");
             }
         } catch (Exception e) {
             log.error("Error - updateAssignment(): " + e.getMessage());

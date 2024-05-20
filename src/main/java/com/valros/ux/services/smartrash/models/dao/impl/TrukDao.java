@@ -3,7 +3,6 @@ package com.valros.ux.services.smartrash.models.dao.impl;
 import com.valros.ux.services.model.Truk;
 import com.valros.ux.services.smartrash.models.dao.ITrukDao;
 import com.valros.ux.services.smartrash.repositories.ITrukRepository;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class TrukDao implements ITrukDao {
                 log.info("Complete - getTrukById() >>>");
                 return trukOptional.get();
             }
-            throw new NotFoundException("throw new NotFoundException - getTrukById()");
+            throw new RuntimeException("throw new NotFoundException - getTrukById()");
         } catch (Throwable e) {
             log.error("Error getTrukById(): " + e.getCause().getCause().getMessage());
             throw new RuntimeException("throw new RuntimeException - getTrukById()",e);
@@ -93,7 +92,7 @@ public class TrukDao implements ITrukDao {
                 return updatedTruk;
             } else {
                 log.info("ERROR - updateTruk() >>>");
-                throw new NotFoundException("throw new NotFoundException - updateTruk()");
+                throw new RuntimeException("throw new NotFoundException - updateTruk()");
             }
         } catch (Exception e) {
             log.error("Error - updateTruk(): " + e.getMessage());
