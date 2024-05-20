@@ -12,13 +12,14 @@ import reactor.core.publisher.Mono;
 {{^reactive}}
 import org.springframework.web.context.request.NativeWebRequest;
 
-import {{javaxPackage}}.servlet.http.HttpServletResponse;
+//import {{javaxPackage}}.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 {{/reactive}}
 
 /**
 * Public Class call ApiUtil
-* homeController.mustache -> config
+* ApiUtil.mustache -> config
 */
 public class ApiUtil {
 {{^reactive}}
