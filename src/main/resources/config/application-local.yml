@@ -15,5 +15,5 @@ spring:
 
 
 server:
-  port: 7071
+  port: 8080
 
